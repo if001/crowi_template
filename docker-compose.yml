@@ -18,13 +18,13 @@ services:
 
   mongo:
     image: mongo:latest
-    volumes:
-      - ./mongodb_data:/data
+    #volumes:
+    #  - ./mongodb_data:/data
 
   redis:
     image: redis:alpine
-    volumes:
-      - ./redis_data:/data
+    #volumes:
+    #  - ./redis_data:/data
 
   elasticsearch:
     # テスト用の設定
