@@ -13,12 +13,18 @@ services:
       - elasticsearch:es
     ports:
       - 8080:3000
+    volumes:
+      - ./crowi_data:/data
 
   mongo:
     image: mongo:latest
+    volumes:
+      - ./mongodb_data:/data
 
   redis:
     image: redis:alpine
+    volumes:
+      - ./redis_data:/data
 
   elasticsearch:
     # テスト用の設定

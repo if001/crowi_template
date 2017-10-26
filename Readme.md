@@ -1,7 +1,6 @@
 # crowiのテンプレート
 https://github.com/crowi/docker-crowi
 
-
 dockerのインストール
 かえるとこはかえる
 ```
@@ -17,3 +16,4 @@ curl -L https://github.com/docker/compose/releases/download/1.14.0/docker-compos
 chmod +x /usr/local/bin/docker-compose
 ```
 
+crowi、mongodb、redisのそれぞれのコンテナ内の/Dataをローカルにマウント
