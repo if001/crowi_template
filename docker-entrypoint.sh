@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
+echo "debug!!!! "$1
 
 if [ "$1" == npm ]; then
-
 	if wait-for-it.sh -t 60 db:27017 ; then
 		if [ -n "$MONGO_URI" ]; then
 			echo >&2 'warning: both linked db container and MONGO_URI found'
@@ -52,19 +52,22 @@ if [ "$1" == npm ]; then
 		. /data/config
 	fi
 	if [ -n "$GIVEN_SEED" -a "$PASSWORD_SEED" != "$GIVEN_SEED" ]; then
-		# A seed is given by command line, which is different from the content of /data/config.
-		# Adopt the given seed and store it to /data/config.
-		export PASSWORD_SEED=$GIVEN_SEED
-		printf 'export PASSWORD_SEED="%q"' "$PASSWORD_SEED" >> /data/config
+	    # A seed is given by command line, which is different from the content of /data/config.
+	    # Adopt the given seed and store it to /data/config.
+	    export PASSWORD_SEED=$GIVEN_SEED
+	    printf 'export PASSWORD_SEED="%q"' "$PASSWORD_SEED" >> /data/config
 	elif [ -z "$PASSWORD_SEED" ]; then
-		# Neither command line nor /data/config give PASSWORD_SEED.
-		# Generate one and store it to /data/config.
+	    # Neither command line nor /data/config give PASSWORD_SEED.
+	    # Generate one and store it to /data/config.
 		export PASSWORD_SEED=`head -c1M /dev/urandom | sha1sum | cut -d' ' -f1`
 		printf 'export PASSWORD_SEED="%q"' "$PASSWORD_SEED" >> /data/config
 	else
-		# Only /data/config gives PASSWORD_SEED, or given seed matches the content of /data/config.
-		# The seed is already set to PASSWORD_SEED and /data/config, so nothing to do.
-		:
+	    # Only /data/config gives PASSWORD_SEED, or given seed matches the content of /data/config.
+	    # The seed is already set to PASSWORD_SEED and /data/config, so nothing to do.
+	    echo "debug !!!!!!!!!"
+	    export $PASSWORD_SEED
+	    echo $PASSWORD_SEED
+	    :
 	fi
 
 fi
