@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 
 services:
   crowi:
@@ -7,24 +7,27 @@ services:
     environment:
       - MATHJAX=1
       - PLANTUML_URI=http://localhost:18080
+      # - PASSWORD_SEED=fa234a8a355d704d9e13ec171e138e30e65ae3b5
+      # - PASSWORD_SEED="b4431eedaa907ca206e14c795bd8022c2db5cd13"
     links:
       - mongo:db
       - redis:redis
       - elasticsearch:es
-    ports:
-      - 8080:3000
+    # nginxでリバースプロキシするので不要
+    # ports:
+    #   - 8080:3000
     volumes:
-      - ./crowi_data:/data
+      - ./entrypoint.sh:/entrypoint.sh
+      - ./crowi_data/config:/data/config
+      - ./crowi_data/uploads:/data/uploads
 
   mongo:
     image: mongo:latest
-    #volumes:
-    #  - ./mongodb_data:/data
+    volumes:
+      - ./mongodb_data/db:/data/db
 
   redis:
     image: redis:alpine
-    #volumes:
-    #  - ./redis_data:/data
 
   elasticsearch:
     # テスト用の設定
@@ -50,3 +53,20 @@ services:
     image: plantuml/plantuml-server:latest
     ports:
       - 18080:8080
+    # networks:
+    #   crowi_network:
+    #     ipv4_address: 172.40.0.7
+
+  nginx:
+    image: nginx:1.13.5-alpine
+    ports:
+      - "8181:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    # environment:
+    #   - NGINX_HOST=foobar.com
+    #   - NGINX_PORT=80
+    command: [nginx, '-g', 'daemon off;']
+    links:
+      - crowi:crowi
