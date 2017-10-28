@@ -64,6 +64,8 @@ services:
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/log/access.log:/var/log/nginx/access.log
+      - ./nginx/log/error.log:/var/log/nginx/error.log
     # environment:
     #   - NGINX_HOST=foobar.com
     #   - NGINX_PORT=80
