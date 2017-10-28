@@ -1,0 +1,5 @@
+crowi_data/*
+mongodb_data/*
+redis_data/*
+nginx/log/access.log
+nginx/log/error.log
