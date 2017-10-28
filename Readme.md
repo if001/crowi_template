@@ -1,6 +1,14 @@
 # crowiのテンプレート
 https://github.com/crowi/docker-crowi
 
+
+nginxでリバースプロキシとキャッシュ
+設定ファイルと、ログはホストにマウント
+
+
+
+dockerが入ってない場合は、以下
+
 dockerのインストール
 かえるとこはかえる
 ```
